@@ -19,7 +19,7 @@ from __init__ import EXTENSION
 from __init__ import config
 
 
-class Dynalls:
+class DynWalls:
     """
     Currently, this class only exists to make the getattr trick to work
     """
