@@ -24,10 +24,10 @@ servicetext = \
 """
 [Unit]
 Description=Update Dynamic Wallpaper
-Environment="PATH={}"
 
 [Service]
 ExecStart=/usr/bin/env python3 {} update
+Environment="PATH={}"
 """.format(os.environ.get("PATH"), os.path.dirname(os.path.abspath(__file__)))
 
 DEFAULT_TIMERNAME = "dynamicwalls.timer"
