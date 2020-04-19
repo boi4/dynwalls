@@ -11,7 +11,7 @@ dynamicwalls - Use Mac OS dynamic wallpapers on linux
 if "XDG_DATA_HOME" in os.environ:
     DATA_DIR = os.environ.get("XDG_DATA_HOME") + "/dynamicwalls/"
 else:
-    DATA_DIR = os.environ.get("HOME")+"/.local/data/dynamicwalls/"
+    DATA_DIR = os.environ.get("HOME")+"/.local/share/dynamicwalls/"
 
 if not os.path.isdir(DATA_DIR):
     try:
