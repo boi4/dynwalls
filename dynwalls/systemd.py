@@ -86,7 +86,7 @@ def disable_timer(timername=DEFAULT_TIMERNAME):
     subprocess.run(args)
 
 def reload():
-    args = ["systemctl", "--user", "daemon-relaod"]
+    args = ["systemctl", "--user", "daemon-reload"]
 
 def setup_units(timelist
                 ,timerfile=DEFAULT_TIMERFILE
