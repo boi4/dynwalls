@@ -24,10 +24,11 @@ servicetext = \
 """
 [Unit]
 Description=Update Dynamic Wallpaper
+Environment="PATH={}"
 
 [Service]
-ExecStart=/usr/bin/env dynamicwalls update
-"""
+ExecStart=/usr/bin/env python3 {} update
+""".format(os.environ.get("PATH"), os.path.dirname(os.path.abspath(__file__)))
 
 DEFAULT_TIMERNAME = "dynamicwalls.timer"
 
@@ -87,6 +88,7 @@ def disable_timer(timername=DEFAULT_TIMERNAME):
 
 def reload():
     args = ["systemctl", "--user", "daemon-reload"]
+    subprocess.run(args)
 
 def setup_units(timelist
                 ,timerfile=DEFAULT_TIMERFILE
