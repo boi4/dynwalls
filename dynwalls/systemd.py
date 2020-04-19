@@ -3,6 +3,7 @@ Functions for installing and creating wallpaper systemd files
 """
 import os
 import subprocess
+import sys
 
 from __init__ import DATA_DIR
 
@@ -26,9 +27,11 @@ servicetext = \
 Description=Update Dynamic Wallpaper
 
 [Service]
-ExecStart=/usr/bin/env python3 {} update
-Environment="PATH={}"
-""".format(os.environ.get("PATH"), os.path.dirname(os.path.abspath(__file__)))
+ExecStart={} {} update
+{}
+""".format(sys.executable,
+           os.path.dirname(os.path.abspath(__file__)),
+           "\n".join(f"Environment=\"{k}={v}\"" for (k,v) in os.environ.items() if "%" not in v))
 
 DEFAULT_TIMERNAME = "dynamicwalls.timer"
 
