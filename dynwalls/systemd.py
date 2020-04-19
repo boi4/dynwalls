@@ -33,10 +33,10 @@ ExecStart={} {} update
            os.path.dirname(os.path.abspath(__file__)),
            "\n".join(f"Environment=\"{k}={v}\"" for (k,v) in os.environ.items() if "%" not in v))
 
-DEFAULT_TIMERNAME = "dynamicwalls.timer"
+DEFAULT_TIMERNAME = "dynwalls.timer"
 
 DEFAULT_TIMERFILE = DATA_DIR + DEFAULT_TIMERNAME
-DEFAULT_SERVICEFILE = DATA_DIR + "dynamicwalls.service"
+DEFAULT_SERVICEFILE = DATA_DIR + "dynwalls.service"
 DEFAULT_UNITDIR = os.environ.get("HOME") + "/.local/share/systemd/user/"
 
 

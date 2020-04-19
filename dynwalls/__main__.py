@@ -19,7 +19,7 @@ from __init__ import EXTENSION
 from __init__ import config
 
 
-class DynamicWalls:
+class Dynalls:
     """
     Currently, this class only exists to make the getattr trick to work
     """
@@ -32,10 +32,23 @@ class DynamicWalls:
         getattr(self, actionname)(args)
 
 
+    def get_timelist(self):
+        timelist = []
+        times = config.dyn_config['ti']
+        for time in times:
+            secs = int(float(time['t']) * 60*60*24)
+            t = datetime.time(secs//(60*60), secs//60 % 60, secs % 60)
+            timelist.append(t)
+        return timelist
+
     # ===== SUBCOMMANDS ======
     def setcmd(self, arguments):
         config.wp_cmd = arguments.cmdstring
         print("Successfully updated wallpaper command.")
+
+        # if hasattr(config, "dyn_config"):
+        #     timelist = self.get_timelist()
+        #     systemd.setup_units(timelist)
 
     def use(self, arguments):
         c = heic.get_wallpaper_config(arguments.heicfile)
@@ -69,12 +82,7 @@ class DynamicWalls:
         config.dyn_config = c
 
         # create units
-        timelist = []
-        times = config.dyn_config['ti']
-        for time in times:
-            secs = int(float(time['t']) * 60*60*24)
-            t = datetime.time(secs//(60*60), secs//60 % 60, secs % 60)
-            timelist.append(t)
+        timelist = self.get_timelist()
         systemd.setup_units(timelist)
         # TODO: only update if enabled
         self.update({})
@@ -137,7 +145,7 @@ def main():
 
     arguments = a.parse()
 
-    dw = DynamicWalls()
+    dw = DynWalls()
     dw.act(arguments.action, arguments)
 
 

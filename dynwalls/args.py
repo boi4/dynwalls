@@ -17,7 +17,7 @@ class Args:
 
 
     def __init__(self):
-        usage = """dynamicwalls <action> [<args>]
+        usage = """dynwalls <action> [<args>]
 
 Available actions:
    {}

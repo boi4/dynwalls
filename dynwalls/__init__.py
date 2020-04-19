@@ -4,14 +4,14 @@ from config import Config
 
 PROGRAM_DESC = \
 """
-dynamicwalls - Use Mac OS dynamic wallpapers on linux
+dynwalls - Use Mac OS dynamic wallpapers on linux
 """.strip()
 
 
 if "XDG_DATA_HOME" in os.environ:
-    DATA_DIR = os.environ.get("XDG_DATA_HOME") + "/dynamicwalls/"
+    DATA_DIR = os.environ.get("XDG_DATA_HOME") + "/dynwalls/"
 else:
-    DATA_DIR = os.environ.get("HOME")+"/.local/share/dynamicwalls/"
+    DATA_DIR = os.environ.get("HOME")+"/.local/share/dynwalls/"
 
 if not os.path.isdir(DATA_DIR):
     try:

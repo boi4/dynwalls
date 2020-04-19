@@ -34,6 +34,6 @@ class Config:
                 for k in j:
                     setattr(self, k, j[k])
         except json.JSONDecodeError:
-            pass
+            print("Invalid config")
         except FileNotFoundError:
-            pass
+            print("No COnfig specified so far")
