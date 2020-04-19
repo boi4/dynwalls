@@ -128,7 +128,7 @@ class DynWalls:
                     last_one = time
                 break
             last_one = time
-        index = last_one['i']
+        index = last_one['i'] + 1 # plus one because heif-convert starts indexing at 1
         ext = EXTENSION[1:] if EXTENSION.startswith(".") else EXTENSION
         image_name = f"{WP_DIR}/{PREFIX}-{index}.{ext}"
         args = shlex.split(config.wp_cmd)
