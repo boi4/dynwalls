@@ -5,7 +5,7 @@ import os
 import subprocess
 import sys
 
-from __init__ import DATA_DIR
+from __init__ import SYSTEMD_DIR
 
 
 timerskeleton = \
@@ -33,9 +33,8 @@ ExecStart={} {} update
 
 DEFAULT_TIMERNAME = "dynwalls.timer"
 
-DEFAULT_TIMERFILE = DATA_DIR + "/" + DEFAULT_TIMERNAME
-DEFAULT_SERVICEFILE = DATA_DIR + "/dynwalls.service"
-DEFAULT_UNITDIR = os.environ.get("HOME") + "/.local/share/systemd/user/"
+DEFAULT_TIMERFILE = SYSTEMD_DIR + "/" + DEFAULT_TIMERNAME
+DEFAULT_SERVICEFILE = SYSTEMD_DIR + "/dynwalls.service"
 
 
 
@@ -72,7 +71,7 @@ def reload():
 def setup_units(timelist
                 ,timerfile=DEFAULT_TIMERFILE
                 ,servicefile=DEFAULT_SERVICEFILE
-                ,unitdir=DEFAULT_UNITDIR):
+                ,unitdir=SYSTEMD_DIR):
 
     _create_timer(timelist, filename=timerfile)
     _create_service(filename=servicefile)
