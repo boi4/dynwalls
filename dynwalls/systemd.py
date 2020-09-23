@@ -70,8 +70,7 @@ def reload():
 
 def setup_units(timelist
                 ,timerfile=DEFAULT_TIMERFILE
-                ,servicefile=DEFAULT_SERVICEFILE
-                ,unitdir=SYSTEMD_DIR):
+                ,servicefile=DEFAULT_SERVICEFILE):
 
     _create_timer(timelist, filename=timerfile)
     _create_service(filename=servicefile)
