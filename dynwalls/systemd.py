@@ -35,8 +35,8 @@ ExecStart={} {} update
 
 DEFAULT_TIMERNAME = "dynwalls.timer"
 
-DEFAULT_TIMERFILE = DATA_DIR + DEFAULT_TIMERNAME
-DEFAULT_SERVICEFILE = DATA_DIR + "dynwalls.service"
+DEFAULT_TIMERFILE = DATA_DIR + "/" + DEFAULT_TIMERNAME
+DEFAULT_SERVICEFILE = DATA_DIR + "/dynwalls.service"
 DEFAULT_UNITDIR = os.environ.get("HOME") + "/.local/share/systemd/user/"
 
 
