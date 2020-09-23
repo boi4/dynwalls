@@ -28,10 +28,8 @@ Description=Update Dynamic Wallpaper
 
 [Service]
 ExecStart={} {} update
-{}
 """.format(sys.executable,
-           os.path.dirname(os.path.abspath(__file__)),
-           "\n".join(f"Environment=\"{k}={v}\"" for (k,v) in os.environ.items() if "%" not in v))
+           os.path.dirname(os.path.abspath(__file__)))
 
 DEFAULT_TIMERNAME = "dynwalls.timer"
 
