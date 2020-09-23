@@ -55,28 +55,6 @@ def _create_service(filename=DEFAULT_SERVICEFILE):
         f.write(servicetext)
 
 
-def _install_files(timerfile=DEFAULT_TIMERFILE
-                  ,servicefile=DEFAULT_SERVICEFILE
-                  ,unitdir=DEFAULT_UNITDIR):
-    def lnabs(src,dst):
-        if not src.startswith("/"):
-            src = os.getcwd() + f"/{src}"
-        if not dst.startswith("/"):
-            dst = os.getcwd() + f"/{dst}"
-        if os.path.isdir(dst):
-            dst = dst + "/" + src.split("/")[-1]
-        if os.path.islink(dst):
-            os.remove(dst)
-        os.symlink(src,dst)
-
-    if not os.path.isdir(unitdir):
-        os.makedirs(unitdir)
-    lnabs(timerfile,unitdir)
-    lnabs(servicefile,unitdir)
-    reload()
-
-
-
 def enable_timer(timername=DEFAULT_TIMERNAME):
     reload()
     args = ["systemctl", "--user", "enable", "--now", timername]
@@ -98,6 +76,4 @@ def setup_units(timelist
 
     _create_timer(timelist, filename=timerfile)
     _create_service(filename=servicefile)
-    _install_files(timerfile=timerfile
-                   ,servicefile=servicefile
-                   ,unitdir=unitdir)
+    reload()
