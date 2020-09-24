@@ -12,7 +12,6 @@ import heic
 
 from pprint import pprint
 
-from __init__ import DATA_DIR
 from __init__ import WP_DIR
 from __init__ import PREFIX
 from __init__ import EXTENSION

@@ -36,4 +36,4 @@ class Config:
         except json.JSONDecodeError:
             print("Invalid config")
         except FileNotFoundError:
-            print("No COnfig specified so far")
+            print("No Config specified so far")

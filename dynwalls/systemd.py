@@ -5,7 +5,7 @@ import os
 import subprocess
 import sys
 
-from __init__ import DATA_DIR
+from __init__ import SYSTEMD_DIR
 
 
 timerskeleton = \
@@ -28,16 +28,13 @@ Description=Update Dynamic Wallpaper
 
 [Service]
 ExecStart={} {} update
-{}
 """.format(sys.executable,
-           os.path.dirname(os.path.abspath(__file__)),
-           "\n".join(f"Environment=\"{k}={v}\"" for (k,v) in os.environ.items() if "%" not in v))
+           os.path.dirname(os.path.abspath(__file__)))
 
 DEFAULT_TIMERNAME = "dynwalls.timer"
 
-DEFAULT_TIMERFILE = DATA_DIR + DEFAULT_TIMERNAME
-DEFAULT_SERVICEFILE = DATA_DIR + "dynwalls.service"
-DEFAULT_UNITDIR = os.environ.get("HOME") + "/.local/share/systemd/user/"
+DEFAULT_TIMERFILE = SYSTEMD_DIR + "/" + DEFAULT_TIMERNAME
+DEFAULT_SERVICEFILE = SYSTEMD_DIR + "/dynwalls.service"
 
 
 
@@ -57,28 +54,6 @@ def _create_service(filename=DEFAULT_SERVICEFILE):
         f.write(servicetext)
 
 
-def _install_files(timerfile=DEFAULT_TIMERFILE
-                  ,servicefile=DEFAULT_SERVICEFILE
-                  ,unitdir=DEFAULT_UNITDIR):
-    def lnabs(src,dst):
-        if not src.startswith("/"):
-            src = os.getcwd() + f"/{src}"
-        if not dst.startswith("/"):
-            dst = os.getcwd() + f"/{dst}"
-        if os.path.isdir(dst):
-            dst = dst + "/" + src.split("/")[-1]
-        if os.path.islink(dst):
-            os.remove(dst)
-        os.symlink(src,dst)
-
-    if not os.path.isdir(unitdir):
-        os.makedirs(unitdir)
-    lnabs(timerfile,unitdir)
-    lnabs(servicefile,unitdir)
-    reload()
-
-
-
 def enable_timer(timername=DEFAULT_TIMERNAME):
     reload()
     args = ["systemctl", "--user", "enable", "--now", timername]
@@ -95,11 +70,8 @@ def reload():
 
 def setup_units(timelist
                 ,timerfile=DEFAULT_TIMERFILE
-                ,servicefile=DEFAULT_SERVICEFILE
-                ,unitdir=DEFAULT_UNITDIR):
+                ,servicefile=DEFAULT_SERVICEFILE):
 
     _create_timer(timelist, filename=timerfile)
     _create_service(filename=servicefile)
-    _install_files(timerfile=timerfile
-                   ,servicefile=servicefile
-                   ,unitdir=unitdir)
+    reload()
