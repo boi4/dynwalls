@@ -8,6 +8,11 @@ import sys
 from __init__ import SYSTEMD_DIR
 
 
+
+# environment variables to copy into the service file if they exist
+ENV_TO_COPY = [ "DISPLAY", "XAUTHORITY" ]
+
+
 timerskeleton = \
 """
 [Unit]
@@ -28,8 +33,11 @@ Description=Update Dynamic Wallpaper
 
 [Service]
 ExecStart={} {} update
+{}
 """.format(sys.executable,
-           os.path.dirname(os.path.abspath(__file__)))
+           os.path.dirname(os.path.abspath(__file__)),
+           "\n".join(f"Environment=\"{k}={v}\""
+               for (k,v) in os.environ.items() if k in ENV_TO_COPY))
 
 DEFAULT_TIMERNAME = "dynwalls.timer"
 
