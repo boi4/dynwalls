@@ -26,18 +26,26 @@ Persistent=true
 WantedBy=timers.target
 """.strip()
 
-servicetext = \
-"""
-[Unit]
-Description=Update Dynamic Wallpaper
+def _get_service_text():
+    r = subprocess.run(["systemctl", "--user", "show-environment"],
+            stdout=subprocess.PIPE)
+    systemctl_env_keys = [line.split("=")[0] for line in r.stdout.decode('utf-8').strip().split("\n")]
+    servicetext = \
+    """
+    [Unit]
+    Description=Update Dynamic Wallpaper
 
-[Service]
-ExecStart={} {} update
-{}
-""".format(sys.executable,
-           os.path.dirname(os.path.abspath(__file__)),
-           "\n".join(f"Environment=\"{k}={v}\""
-               for (k,v) in os.environ.items() if k in ENV_TO_COPY))
+    [Service]
+    ExecStart={} {} update
+    """.format(sys.executable,
+            os.path.dirname(os.path.abspath(__file__)))
+
+    # if the env var is already given by systemd, we will not include it
+    # if the env var is not available by systemd, but is currently set, we will
+    # use the current value in the future
+    servicetext += "\n".join(f"Environment=\"{k}={v}\"" for (k,v) in os.environ.items()
+            if k in ENV_TO_COPY and k not in systemctl_env_keys)
+    return servicetext
 
 DEFAULT_TIMERNAME = "dynwalls.timer"
 
@@ -59,7 +67,7 @@ def _create_timer(timelist, filename=DEFAULT_TIMERFILE):
 
 def _create_service(filename=DEFAULT_SERVICEFILE):
     with open(filename, "w+") as f:
-        f.write(servicetext)
+        f.write(_get_service_text())
 
 
 def enable_timer(timername=DEFAULT_TIMERNAME):
