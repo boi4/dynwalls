@@ -70,3 +70,6 @@ You can run
 journalctl --user -u dynamicwalls
 ```
 to see possible error messages.
+
+
+If you use a transparent status bar and are having contrast problems, take a look at [STATUS_BARS.md](./STATUS_BARS.md)
