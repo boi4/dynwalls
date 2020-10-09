@@ -8,7 +8,6 @@ import sys
 from __init__ import SYSTEMD_DIR
 
 
-
 # environment variables to copy into the service file if they exist
 ENV_TO_COPY = [ "DISPLAY", "XAUTHORITY" ]
 
@@ -26,9 +25,12 @@ Persistent=true
 WantedBy=timers.target
 """.strip()
 
+
 def _get_service_text():
-    r = subprocess.run(["systemctl", "--user", "show-environment"],
-            stdout=subprocess.PIPE)
+    r = subprocess.run(
+        ["systemctl", "--user", "show-environment"],
+        stdout=subprocess.PIPE
+    )
     systemctl_env_keys = [line.split("=")[0] for line in r.stdout.decode('utf-8').strip().split("\n")]
     servicetext = \
     """
@@ -47,11 +49,10 @@ def _get_service_text():
             if k in ENV_TO_COPY and k not in systemctl_env_keys)
     return servicetext
 
-DEFAULT_TIMERNAME = "dynwalls.timer"
 
+DEFAULT_TIMERNAME = "dynwalls.timer"
 DEFAULT_TIMERFILE = SYSTEMD_DIR + "/" + DEFAULT_TIMERNAME
 DEFAULT_SERVICEFILE = SYSTEMD_DIR + "/dynwalls.service"
-
 
 
 def _create_timer(timelist, filename=DEFAULT_TIMERFILE):
@@ -59,7 +60,7 @@ def _create_timer(timelist, filename=DEFAULT_TIMERFILE):
     timelist should be a list of datetime.time objects
     """
     conditions = ["OnCalendar=*-*-* {}".format(time.isoformat("seconds")) for time in timelist]
-    timertext = timerskeleton.replace("INSERTHERE","\n".join(conditions))
+    timertext = timerskeleton.replace("INSERTHERE", "\n".join(conditions))
     with open(filename, "w+") as f:
         f.write(timertext)
 
@@ -74,20 +75,23 @@ def enable_timer(timername=DEFAULT_TIMERNAME):
     args = ["systemctl", "--user", "enable", "--now", timername]
     subprocess.run(args)
 
+
 def disable_timer(timername=DEFAULT_TIMERNAME):
     reload()
     args = ["systemctl", "--user", "disable", timername]
     subprocess.run(args)
 
+
 def reload():
     args = ["systemctl", "--user", "daemon-reload"]
     subprocess.run(args)
+
 
 def setup_units(
         timelist,
         timerfile=DEFAULT_TIMERFILE,
         servicefile=DEFAULT_SERVICEFILE
-    ):
+):
 
     _create_timer(timelist, filename=timerfile)
     _create_service(filename=servicefile)

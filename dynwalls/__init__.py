@@ -26,6 +26,6 @@ except sys.OSError:
 
 config = Config(DATA_DIR)
 
-WP_DIR    = DATA_DIR+"/images"
-PREFIX    = "wallpaper"
+WP_DIR = DATA_DIR + "/images"
+PREFIX = "wallpaper"
 EXTENSION = ".jpg"

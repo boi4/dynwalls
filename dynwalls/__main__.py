@@ -26,10 +26,8 @@ class DynWalls:
     def __init__(self):
         pass
 
-
     def act(self, actionname, args):
         getattr(self, actionname)(args)
-
 
     def get_timelist(self):
         timelist = []
@@ -86,11 +84,9 @@ class DynWalls:
         timelist = self.get_timelist()
         systemd.setup_units(timelist)
         # TODO: only update if enabled
-        self.update({})
+        self.update()
 
-
-
-    def enable(self, arguments):
+    def enable(self):
         if not hasattr(config, "dyn_config"):
             print("Error: Please set a wallpaper with the 'use' command first",file=sys.stderr)
             sys.exit(1)
@@ -100,15 +96,13 @@ class DynWalls:
             sys.exit(1)
 
         systemd.enable_timer()
-        self.update({})
+        self.update()
 
-
-    def disable(self, arguments):
+    def disable(self):
         # TODO: check if timer active at all
         systemd.disable_timer()
 
-
-    def update(self, arguments):
+    def update(self):
         if not hasattr(config, "dyn_config"):
             print("Error: Please set a wallpaper with the 'use' command first", file=sys.stderr)
             sys.exit(1)
@@ -119,17 +113,16 @@ class DynWalls:
 
         times = config.dyn_config['ti']
         times.sort(key=lambda x: x['t'])
-        using = times[0]
         now = datetime.datetime.now().time()
         nowsecs = now.hour * 60 * 60 + now.minute * 60 + now.second
         last_one = times[-1]
         for time in times:
             if float(time['t']) * 60*60*24 > nowsecs:
-                if float(time['t']) * 60*60*24 - nowsecs < 10: # prevent floating errors or similar things
+                if float(time['t']) * 60*60*24 - nowsecs < 10:  # prevent floating errors or similar things
                     last_one = time
                 break
             last_one = time
-        index = last_one['i'] + 1 # plus one because heif-convert starts indexing at 1
+        index = last_one['i'] + 1  # plus one because heif-convert starts indexing at 1
         ext = EXTENSION[1:] if EXTENSION.startswith(".") else EXTENSION
         image_name = f"{WP_DIR}/{PREFIX}-{index}.{ext}"
         args = shlex.split(config.wp_cmd)
@@ -138,7 +131,6 @@ class DynWalls:
         else:
             args += [image_name]
         subprocess.run(args)
-
 
 
 def main():
