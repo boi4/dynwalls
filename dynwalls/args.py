@@ -9,11 +9,11 @@ class Args:
     TODO: add action to help message string of subcommands
     """
     actions = {
-        "setcmd" : ("<cmdstring>", "Configure which command to use for updating the wallpaper"),
-        "use" : ("<heicfile>","Use HEIC file as the new dynamic wallpaper"),
-        "enable" : ("","Enable and activate dynwalls"),
-        "disable" : ("","Disable and stop dynwalls"),
-        "update" : ("","Update wallpaper for current time (will be called automatically with systemd)"),
+        "setcmd": ("<cmdstring>", "Configure which command to use for updating the wallpaper"),
+        "use": ("<heicfile>", "Use HEIC file as the new dynamic wallpaper"),
+        "enable": ("", "Enable and activate dynwalls"),
+        "disable": ("", "Disable and stop dynwalls"),
+        "update": ("", "Update wallpaper for current time (will be called automatically with systemd)"),
     }
 
     def __init__(self):
