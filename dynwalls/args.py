@@ -12,8 +12,8 @@ class Args:
         "use" : ("<heicfile>","Use HEIC file as the new dynamic wallpaper"),
         "enable" : ("","Enable and activate dynwalls"),
         "disable" : ("","Disable and stop dynwalls"),
-        "update" : ("","Update wallpaper for current time (will be called automatically with systemd)")
-        }
+        "update" : ("","Update wallpaper for current time (will be called automatically with systemd)"),
+    }
 
 
     def __init__(self):

@@ -58,8 +58,7 @@ def _create_timer(timelist, filename=DEFAULT_TIMERFILE):
     """
     timelist should be a list of datetime.time objects
     """
-    conditions = ["OnCalendar=*-*-* {}".format(time.isoformat("seconds"))
-                  for time in timelist]
+    conditions = ["OnCalendar=*-*-* {}".format(time.isoformat("seconds")) for time in timelist]
     timertext = timerskeleton.replace("INSERTHERE","\n".join(conditions))
     with open(filename, "w+") as f:
         f.write(timertext)
@@ -84,9 +83,11 @@ def reload():
     args = ["systemctl", "--user", "daemon-reload"]
     subprocess.run(args)
 
-def setup_units(timelist
-                ,timerfile=DEFAULT_TIMERFILE
-                ,servicefile=DEFAULT_SERVICEFILE):
+def setup_units(
+        timelist,
+        timerfile=DEFAULT_TIMERFILE,
+        servicefile=DEFAULT_SERVICEFILE
+    ):
 
     _create_timer(timelist, filename=timerfile)
     _create_service(filename=servicefile)

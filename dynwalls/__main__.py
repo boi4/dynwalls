@@ -54,7 +54,7 @@ class DynWalls:
         if "si" in c:
             print("Sun based wallpapers are not yet supported.", file=sys.stderr)
             sys.exit(1)
-        times =  c['ti']
+        times = c['ti']
         times.sort(key=lambda x: x['t'])
         prev = -0.1
         for d in times:
@@ -65,7 +65,7 @@ class DynWalls:
                 print("Warning: Ambigous time specifiation found. Might skip some images.")
             prev = cur
 
-        # TODO: check if all image indizes are available in the heic file
+        # TODO: check if all image indices are available in the heic file
 
         # clean up old images
         if os.path.isdir(WP_DIR):
@@ -73,10 +73,12 @@ class DynWalls:
                 if re.match(f"^{PREFIX}-[\\d]+{EXTENSION}$", f):
                     os.remove(f"{WP_DIR}/{f}")
 
-        heic.extract_images(arguments.heicfile,
-                            outputdir=WP_DIR,
-                            filename_prefix=PREFIX,
-                            extension=EXTENSION)
+        heic.extract_images(
+            arguments.heicfile,
+            outputdir=WP_DIR,
+            filename_prefix=PREFIX,
+            extension=EXTENSION,
+        )
 
         config.dyn_config = c
 
@@ -108,11 +110,11 @@ class DynWalls:
 
     def update(self, arguments):
         if not hasattr(config, "dyn_config"):
-            print("Error: Please set a wallpaper with the 'use' command first",file=sys.stderr)
+            print("Error: Please set a wallpaper with the 'use' command first", file=sys.stderr)
             sys.exit(1)
 
         if not hasattr(config, "wp_cmd"):
-            print("Error: Please specify a wallpaper setting command using 'setcmd' first.",file=sys.stderr)
+            print("Error: Please specify a wallpaper setting command using 'setcmd' first.", file=sys.stderr)
             sys.exit(1)
 
         times = config.dyn_config['ti']

@@ -14,7 +14,7 @@ class Config:
         Save config to file after each attribute access
         """
         super().__setattr__(name, value)
-        if hasattr(self,"_watching") \
+        if hasattr(self, "_watching") \
             and self._watching \
             and not name.startswith("_"):
             self._save_config()
@@ -22,7 +22,7 @@ class Config:
 
     def _save_config(self):
         with open(self._conffile, "w+") as f:
-            serialized = json.dumps({k:v for (k,v) in vars(self).items() if not k.startswith("_")})
+            serialized = json.dumps({k: v for (k, v) in vars(self).items() if not k.startswith("_")})
             f.write(serialized)
 
 
