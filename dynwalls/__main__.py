@@ -86,7 +86,7 @@ class DynWalls:
         # TODO: only update if enabled
         self.update()
 
-    def enable(self):
+    def enable(self, arguments={}):
         if not hasattr(config, "dyn_config"):
             print("Error: Please set a wallpaper with the 'use' command first",file=sys.stderr)
             sys.exit(1)
@@ -98,11 +98,11 @@ class DynWalls:
         systemd.enable_timer()
         self.update()
 
-    def disable(self):
+    def disable(self, arguments={}):
         # TODO: check if timer active at all
         systemd.disable_timer()
 
-    def update(self):
+    def update(self,arguments={}):
         if not hasattr(config, "dyn_config"):
             print("Error: Please set a wallpaper with the 'use' command first", file=sys.stderr)
             sys.exit(1)
