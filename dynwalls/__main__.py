@@ -125,11 +125,15 @@ class DynWalls:
         index = last_one['i'] + 1  # plus one because heif-convert starts indexing at 1
         ext = EXTENSION[1:] if EXTENSION.startswith(".") else EXTENSION
         image_name = f"{WP_DIR}/{PREFIX}-{index}.{ext}"
-        args = shlex.split(config.wp_cmd)
-        if "{}" in args:
-            args = [image_name if arg == "{}" else arg for arg in args]
+
+        if "{}" in config.wp_cmd:
+            cli = config.wp_cmd
+            cli = cli.replace("{}", image_name)
+            args = shlex.split(cli)
         else:
+            args = shlex.split(config.wp_cmd)
             args += [image_name]
+
         subprocess.run(args)
 
 
