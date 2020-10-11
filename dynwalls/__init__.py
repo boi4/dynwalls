@@ -16,16 +16,16 @@ else:
     SYSTEMD_DIR = os.environ.get("HOME") + "/.local/share/systemd/user"
 
 try:
-	if not os.path.isdir(DATA_DIR) and not os.path.islink(DATA_DIR):
-		os.makedirs(DATA_DIR)
-	if not os.path.isdir(SYSTEMD_DIR) and not os.path.islink(SYSTEMD_DIR):
-		os.makedirs(SYSTEMD_DIR)
+    if not os.path.isdir(DATA_DIR) and not os.path.islink(DATA_DIR):
+        os.makedirs(DATA_DIR)
+    if not os.path.isdir(SYSTEMD_DIR) and not os.path.islink(SYSTEMD_DIR):
+        os.makedirs(SYSTEMD_DIR)
 except sys.OSError:
-	print(f"Couldn't create data directory in {DATA_DIR}", file=sys.stderr)
-	sys.exit(1)
+    print(f"Couldn't create data directory in {DATA_DIR}", file=sys.stderr)
+    sys.exit(1)
 
 config = Config(DATA_DIR)
 
-WP_DIR    = DATA_DIR+"/images"
-PREFIX    = "wallpaper"
+WP_DIR = DATA_DIR + "/images"
+PREFIX = "wallpaper"
 EXTENSION = ".jpg"

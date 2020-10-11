@@ -15,7 +15,7 @@ def get_exif(fname):
     args = ["exiftool", fname]
     r = subprocess.run(args, stdout=subprocess.PIPE)
     output = r.stdout.decode("utf-8")
-    return {line.split(":")[0].strip() : line.split(":")[1].strip() for line in output.split("\n")[:-1] }
+    return {line.split(":")[0].strip(): line.split(":")[1].strip() for line in output.split("\n")[:-1]}
 
 
 def extract_images(fname, outputdir, filename_prefix, extension):

@@ -4,9 +4,9 @@ import re
 import subprocess
 import sys
 
-from PIL import Image # needs python pillow installed
+from PIL import Image  # needs python pillow installed
 
-STATUSBAR_HEIGHT = 5 # in pixels
+STATUSBAR_HEIGHT = 5  # in pixels
 CONFIG_PATH = "~/.config/i3status-rust/config.toml"
 
 
@@ -60,21 +60,25 @@ dark_theme = {
     "alternating_tint_fg" : "#000000ff",
 }
 
+
 def set_wallpaper(img_path):
     subprocess.run(["feh", "--bg-fill", "--no-fehbg", img_path])
 
+
 def get_avg_luminance(img_path):
-    im = Image.open(image_path)
-    cropped = im.crop((0,0,im.width,STATUSBAR_HEIGHT))
+    im = Image.open(img_path)
+    cropped = im.crop((0, 0, im.width, STATUSBAR_HEIGHT))
 
     # convert to grayscale
     if cropped.mode != "L":
         cropped = cropped.convert(mode="L")
 
-    return cropped.resize((1,1), Image.ANTIALIAS).getpixel((0,0)) / 255 # small trick
+    return cropped.resize((1,1), Image.ANTIALIAS).getpixel((0, 0)) / 255  # small trick
+
 
 def reload_bar():
     subprocess.run(["pkill", "-f", "i3status-wrapper.py", "--signal", "SIGUSR1"])
+
 
 def apply_theme(theme, theme_magic):
     with open(os.path.expanduser(CONFIG_PATH), "r") as f:

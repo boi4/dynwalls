@@ -16,7 +16,7 @@ This Python programs allows you to set Dynamic Wallpapers from MacOS (in the [HE
  - exiftool
  - libheif 
  
- Note that both `exiftool` and `heif-convert`(part of libheif) have to be in your PATH.
+ Note that both `exiftool` and `heif-convert` (part of libheif) have to be in your PATH.
  
 ## Installation
 Currently, the program is not available on pypi and has to be cloned manually.
