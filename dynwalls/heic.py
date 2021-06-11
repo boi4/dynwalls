@@ -6,6 +6,7 @@ import plistlib
 import sys
 import subprocess
 import os
+import os.path
 
 
 def get_exif(fname):
@@ -26,9 +27,11 @@ def extract_images(fname, outputdir, filename_prefix, extension):
         extension = extension[1:]
     if not os.path.isdir(outputdir):
         os.makedirs(outputdir)
-    args = ["heif-convert", "-q", "100", fname, f"{outputdir}/{filename_prefix}.{extension}"]
-    # TODO: check return code
-    subprocess.run(args)
+
+    args = ["heif-convert", "-q", "100", os.path.abspath(fname), f"{filename_prefix}.{extension}"]
+    r = subprocess.run(args, cwd=outputdir)
+    if r.returncode != 0:
+        print("An error occured when extracting the file.")
 
 
 def get_wallpaper_config(fname):
