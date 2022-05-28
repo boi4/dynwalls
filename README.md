@@ -14,9 +14,10 @@ This Python programs allows you to set Dynamic Wallpapers from MacOS (in the [HE
 ## Requirements
  - Systemd (For automatic updating)
  - exiftool
- - libheif 
+ - libheif (`libheif-examples` under Debian, Ubuntu, Pop!\_OS)
+ - (optional) feh, if you want to use the example command below
  
- Note that both `exiftool` and `heif-convert` (part of libheif) have to be in your PATH.
+Make sure that both `exiftool` and `heif-convert` (part of libheif) can be executed from your command line.
  
 ## Installation
 Currently, the program is not available on pypi and has to be cloned manually.
@@ -34,10 +35,18 @@ First, specify a command that will set your wallpaper given a jpg image:
 dynwalls setcmd 'feh --bg-fill --no-fehbg {}'
 ```
 
-You can use a custom shellscript for more complicated setups, just make sure it is available in your PATH.
+The command you use depends on your system setup. If you're running GNOME, you will want to use:
+
+```shell
+dynwalls setcmd 'gsettings set org.gnome.desktop.background picture-uri {}'
+```
+
+In general, googling `How to set background image on command line with XYZ` where `XYZ` is your window manager/desktop environment should help.
+
+Also, you can use a custom shellscript for more complicated setups, just make sure it is available in your PATH.
 
 
-Then, specify a dynamic wallpaper to use:
+After you are done with the previous step, specify a dynamic wallpaper to use:
 
 ```shell
 dynwalls use mojave.heic
