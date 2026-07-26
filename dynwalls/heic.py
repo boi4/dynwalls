@@ -28,7 +28,7 @@ def extract_images(fname, outputdir, filename_prefix, extension):
     if not os.path.isdir(outputdir):
         os.makedirs(outputdir)
 
-    args = ["heif-convert", "-q", "100", os.path.abspath(fname), f"{filename_prefix}.{extension}"]
+    args = ["heif-convert", "-q", "100", "--disable-limits", os.path.abspath(fname), f"{filename_prefix}.{extension}"]
     r = subprocess.run(args, cwd=outputdir)
     if r.returncode != 0:
         print("An error occured when extracting the file.")
